@@ -43,4 +43,6 @@ fun main() {
     println("Последние сообщения в чатах с $userId")
     service.getLastMessages(listOf(userId))
     println(service)
+    println(ChatService.getMessages(123, 1))
+    ChatService.printChats()
 }

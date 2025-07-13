@@ -9,8 +9,12 @@ class ChatService {
         return result
     }
 
-    fun getChatsForUser(userId: Int): List<Chat> =
-        chats.values.filter { userId in it.participants }
+    fun getMessage(userId: Int, count: Int): List<Message> {
+        val chat = chats[userId] ?: throw NoSuchChatExeption
+        return chat.messages.takeLast(count).onEach { it.read = true }
+    }
+
+    fun printChats() = println(chats)
 
     fun addMessage(userIds : List<Int>, message : Message) : Chat {
         return chats.getOrPut(userIds) {
@@ -60,4 +64,8 @@ class ChatService {
     }
 
 
+}
+
+object NoSuchChatExeption : Throwable() {
+    private fun readResolve(): Any = NoSuchChatExeption
 }
