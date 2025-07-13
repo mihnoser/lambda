@@ -9,11 +9,22 @@ class ChatService {
         return result
     }
 
+    fun getChatsForUser(userId: Int): List<Chat> =
+        chats.values.filter { userId in it.participants }
+
     fun addMessage(userIds : List<Int>, message : Message) : Chat {
         return chats.getOrPut(userIds) {
             Chat()
         }.apply {
             messages.add(message)
+        }
+    }
+
+    fun deleteMessage(userIds : List<Int>, message : Message) : Chat {
+        return chats.getOrPut(userIds) {
+            Chat()
+        }.apply {
+            messages.remove(message)
         }
     }
 
@@ -43,4 +54,10 @@ class ChatService {
     fun getUnreadChatsCount(userId : Int) : Int {
         return chats.filter { entry ->  entry.key.contains(userId)}.values.filter { !it.unreadMessagesB() }.count()
     }
+
+    fun getLastMessages(listOf: List<Int>): List<String> = chats.values.map { chat ->
+        chat.messages.lastOrNull()?.text ?: "нет сообщений"
+    }
+
+
 }
