@@ -1,4 +1,4 @@
 data class Message (
-    var isRead : Boolean = false,
+    var read : Boolean = false,
     val text : String
 )

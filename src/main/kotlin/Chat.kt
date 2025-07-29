@@ -3,11 +3,11 @@ class Chat (){
 
     fun readMessages(){
         for (message in this.messages)
-            message.isRead = true
+            message.read = true
     }
 
     fun unreadMessagesB() : Boolean {
-        return messages.filter { !it.isRead }.isEmpty()
+        return messages.filter { !it.read }.isEmpty()
     }
 
     override fun toString(): String {

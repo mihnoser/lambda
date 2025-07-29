@@ -10,7 +10,7 @@ class ChatService {
     }
 
     fun getMessage(userId: Int, count: Int): List<Message> {
-        val chat = chats[userId] ?: throw NoSuchChatExeption
+        val chat = chats.get<Any, Chat>(userId) ?: throw NoSuchChatExeption
         return chat.messages.takeLast(count).onEach { it.read = true }
     }
 
@@ -34,7 +34,7 @@ class ChatService {
 
     fun getMessagesFromChat(userIds : List<Int>) : List<Message> {
         val chat = chats.filter { entry ->  entry.key.containsAll(userIds) }.values.first().messages
-        chat.forEach { message -> message.isRead = true }
+        chat.forEach { message -> message.read = true }
         return chat
     }
 
